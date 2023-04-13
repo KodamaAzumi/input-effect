@@ -4,12 +4,13 @@
 const storage = localStorage.getItem('key');
 console.log(JSON.parse(storage));
 
-// 現在の時刻を取得
+// ページを開いた時刻を取得
 const justNow = Date.now();
 
 // タイプされた文字をstorageに保存する
 const type = (event) =>{
     const key = event.key;
+    // タイプされた時間を取得
     const now = Date.now();
 
     const storage = localStorage.getItem('key');
@@ -75,9 +76,14 @@ const onButtonClick = () => {
 
 function setup() {
     
-    const p5Canvas = createCanvas(400, 700);
+    const p5Canvas = createCanvas(500, 500);
     p5Canvas.parent('p5Canvas');
 
+      // キャンバスを保存する
+      const saveButton = document.getElementById('canvasSave');
+      saveButton.addEventListener('click', () => {
+        saveCanvas(p5Canvas, `Diary${year()}${month()}${day()}${hour()}${second()}${minute()}`, 'jpg');
+      });  
 }
 
 function draw() {
