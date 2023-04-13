@@ -4,19 +4,19 @@
 const storage = localStorage.getItem('key');
 console.log(JSON.parse(storage));
 
+// 現在の時刻を取得
 const justNow = Date.now();
 
+// タイプされた文字をstorageに保存する
 const type = (event) =>{
-    //console.log(event);
     const key = event.key;
     const now = Date.now();
-    //console.log(now);
 
     const storage = localStorage.getItem('key');
     const storageObject = JSON.parse(storage);
     console.log(storageObject);
 
-    if (key.match(/[a-z]/i) && key.length === 1 || key.match(/[0-9]/)) {
+    if (key.match(/[a-z]/i) && key.length === 1 || key.match(/[0-9]/) || key === " " || key === "." || key === "'" || key === "Enter") {
         if (storageObject && storageObject.length > 0) {
 
             const length = storageObject.length;
@@ -42,7 +42,7 @@ const type = (event) =>{
             };
             localStorage.setItem('key', JSON.stringify(data.items));
         }
-    } else if (storageObject.length && key ==='Backspace') {
+    } else if (storageObject && storageObject.length && key ==='Backspace') {
         storageObject.length = storageObject.length - 1;
         console.log(storageObject);
         console.log(storageObject.length);
@@ -59,7 +59,6 @@ textarea.addEventListener('focus', () => {
 textarea.addEventListener('blur', () => {
     document.removeEventListener('keydown', type);
     console.log('離れた');
-    location.reload();
 });
 
 
@@ -76,22 +75,43 @@ const onButtonClick = () => {
 
 function setup() {
     
-    const data = JSON.parse(localStorage.getItem('key'));
-    
-    createCanvas(710, 400);
+    const p5Canvas = createCanvas(400, 700);
+    p5Canvas.parent('p5Canvas');
+
+}
+
+function draw() {
+
     background(160);
 
+    const data = JSON.parse(localStorage.getItem('key'));
+    
     if(data) {
+    // 文字の初期値
+    let x = 10;
+    let y = 30;
+
         for (let i = 0; i < data.length; i++) {
-            console.log(data[i]);
-            fill(255, 255, 255, Math.max(100, data[i].time));
-            textSize(20);
-            //textSize(Math.min(100, data[i].time/10));
-            text(`${data[i].key}`, 10 + i*30, 30);
+
+            // Enterキーが押されたら改行する。
+            if (data[i].key === 'Enter') {
+                x = 10;
+                y += 35;
+            } else {
+                fill(255, 255, 255, Math.max(100, data[i].time));
+                textSize(20);
+                text(`${data[i].key}`, x, y);
+                textAlign(LEFT, LEFT);
+                // テキストの幅がcanvasの幅を超えた場合、y座標を下げる
+                if (x + textWidth(data[i].key) + 20 > width - 15) {
+                x = 10;
+                y += 35;
+                } else {
+                x += textWidth(data[i].key) + 15;
+                }
+            }
         }
-    }
-    
-    
+    }  
 }
 
 const dataClear = () => {
