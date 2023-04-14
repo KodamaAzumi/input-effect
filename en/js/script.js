@@ -11,14 +11,18 @@ const justNow = Date.now();
 // タイプされた文字をstorageに保存する
 const type = (event) =>{
     const key = event.key;
-    // タイプされた時間を取得
+
+    // タイプされた時の時間を取得
     const now = Date.now();
 
+    // // データをstorageから取り出す
     const storage = localStorage.getItem('key');
     const storageObject = JSON.parse(storage);
     console.log(storageObject);
 
+    // 条件に当てはまる場合storageに保存する
     if (key.match(/[a-z]/i) && key.length === 1 || key.match(/[0-9]/) || key === " " || key === "." || key === "'" || key === "Enter") {
+        // storage内にデータがあるかどうか、初めて保存するか
         if (storageObject && storageObject.length > 0) {
 
             const length = storageObject.length;
@@ -50,19 +54,21 @@ const type = (event) =>{
     }
 };
 
+// textareaにforcasが当たっている場合
 const textarea = document.getElementById('textarea');
 textarea.addEventListener('focus', () => {
     document.addEventListener('keydown', type);
     console.log('くっついた');
 });
 
+// textareaにforcasが当たっていない場合
 textarea.addEventListener('blur', () => {
     document.removeEventListener('keydown', type);
     console.log('離れた');
 });
 
 function setup() {
-    
+
     const p5Canvas = createCanvas(500, 500);
     p5Canvas.parent('p5Canvas');
 
@@ -70,7 +76,8 @@ function setup() {
       const saveButton = document.getElementById('canvasSave');
       saveButton.addEventListener('click', () => {
         saveCanvas(p5Canvas, `Diary${year()}${month()}${day()}${hour()}${second()}${minute()}`, 'jpg');
-      });  
+      });
+
 }
 
 function draw() {
@@ -108,9 +115,9 @@ function draw() {
     }  
 }
 
+// storage内のデータを消去する
 const dataClear = () => {
     console.log('押した');
     localStorage.clear();
     location.reload();
 };
-
