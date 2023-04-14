@@ -1,6 +1,7 @@
 // リロードすると消去される
 //localStorage.clear();
 // データ確認用
+
 const storage = localStorage.getItem('key');
 console.log(JSON.parse(storage));
 
@@ -45,8 +46,6 @@ const type = (event) =>{
         }
     } else if (storageObject && storageObject.length && key ==='Backspace') {
         storageObject.length = storageObject.length - 1;
-        console.log(storageObject);
-        console.log(storageObject.length);
         localStorage.setItem('key', JSON.stringify(storageObject));
     }
 };
@@ -61,18 +60,6 @@ textarea.addEventListener('blur', () => {
     document.removeEventListener('keydown', type);
     console.log('離れた');
 });
-
-
-
-// formのコード
-/*
-const onButtonClick = () => {
-    target = document.getElementById("output");
-    target.innerText = document.forms.id_form.textarea.value;
-};
-*/
-
-// p5.js
 
 function setup() {
     
@@ -106,6 +93,7 @@ function draw() {
             } else {
                 fill(255, 255, 255, Math.max(100, data[i].time));
                 textSize(20);
+                textFont('Yu Gothic');
                 text(`${data[i].key}`, x, y);
                 textAlign(LEFT, LEFT);
                 // テキストの幅がcanvasの幅を超えた場合、y座標を下げる
