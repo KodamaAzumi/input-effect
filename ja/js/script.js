@@ -21,7 +21,9 @@ const textarea = document.getElementById('textarea');
 
 const type = (event) =>{
     //const eventData = event.data;
+    // textarea.value、event.data、event.target.value。
     const japaneseText = textarea.value;
+    console.log(japaneseText);
 
     // タイプされた時の時間を取得
     const now = Date.now();
@@ -31,8 +33,7 @@ const type = (event) =>{
     const storageObject = JSON.parse(storage);
 
     // 条件式に当てはまる場合storageに保存する
-    if (japaneseText.length > 1 && japaneseText.match(/[^\x00-\x7F]/)) {
-        console.log(japaneseText);
+    if (japaneseText.match(/[^\x00-\x7F]/)) {
         // storage内にデータがあるかどうか、初めて保存するか 
         if (storageObject && storageObject.length > 0) {
 
@@ -58,11 +59,34 @@ const type = (event) =>{
             };
             localStorage.setItem('key', JSON.stringify(data.items));
         }
-    }
+    } 
 };
 
 // inputイベント
 textarea.addEventListener('input', type);
+
+textarea.addEventListener('keydown', (event) => {
+    const keyCode = event.code.replace('Key', '').toLowerCase();
+    console.log(keyCode);
+
+    // データをstorageから取り出す
+    const storage = localStorage.getItem('key');
+    const storageObject = JSON.parse(storage);
+
+    // storageObjectがnullでなく、長さが1以上の場合の処理
+    if (storageObject?.length > 0) {
+        const lastLength = storageObject[storageObject.length - 1].japaneseText.length;
+        if(keyCode === 'backspace' && lastLength === 1){
+            /*
+            storageObject.push({
+                japaneseText : ''
+            });
+            localStorage.setItem('key', JSON.stringify(storageObject));
+            */
+            localStorage.clear();
+        }   
+    }
+});
 
 function setup() {
 
