@@ -67,44 +67,38 @@ const type = (event) =>{
 // inputイベント
 textarea.addEventListener('input', type);
 
-let keyCodeArray = [];
-
 textarea.addEventListener('keydown', (event) => {
+    // keyCodeのKeyを消去して、小文字にする。
     const keyCode = event.code.replace('Key', '').toLowerCase();
     console.log(keyCode);
 
     // データをstorageから取り出す
     const storage = localStorage.getItem('key');
     const storageObject = JSON.parse(storage);
+    const storage2 = localStorage.getItem('keyCode');
+    const storageObject2 = JSON.parse(storage2);
 
-    // storageObjectがnullでなく、長さが1以上の場合の処理
-    if (storageObject?.length > 0) {
-        const lastLength = storageObject[storageObject.length - 1].japaneseText.length;
-        if(keyCode === 'backspace' && lastLength === 1){
-            /*
-            storageObject.push({
-                japaneseText : ''
-            });
-            localStorage.setItem('key', JSON.stringify(storageObject));
-            */
-            localStorage.clear();
-        } else if (keyCode.match(/[a-z]/i) && keyCode.length === 1 || keyCode.match(/[0-9]/)) {
-            // データをstorageから取り出す
-            const storage2 = localStorage.getItem('keyCode');
-            const storageObject2 = JSON.parse(storage2);
-
+    if (keyCode.match(/[a-z]/i) && keyCode.length === 1 || keyCode.match(/[0-9]/) || key === ".") {
+        if (storageObject2 && storageObject2.length > 0) {
+            // storageがある場合の処理
             storageObject2.push({
                 keyCode
             });
             localStorage.setItem('keyCode', JSON.stringify(storageObject2));
-    }
-    } else if (keyCode.match(/[a-z]/i) && keyCode.length === 1 || keyCode.match(/[0-9]/)) {
+
+        } else {
+            // storageがない場合の処理
+            const keyCodeArray = [];
             const keyCodeObject = {
                 keyCode: keyCode
             };
             keyCodeArray.push(keyCodeObject);
             localStorage.setItem('keyCode', JSON.stringify(keyCodeArray));
+        }
+    } else if (storageObject?.length > 0 && keyCode === 'backspace' && storageObject[storageObject.length - 1].japaneseText.length === 1) {
+        localStorage.clear();
     }
+
 });
 
 function setup() {
