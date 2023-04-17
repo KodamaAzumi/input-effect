@@ -17,7 +17,6 @@ const dataClear = () => {
     location.reload();
 };
 
-
 // inputイベントを使用した場合
 const textarea = document.getElementById('textarea');
 
@@ -35,7 +34,7 @@ const type = (event) =>{
     const storageObject = JSON.parse(storage);
 
     // 条件式に当てはまる場合storageに保存する
-    if (japaneseText.match(/[^\x00-\x7F]/)) {
+    if (japaneseText.match(/[^\x00-\x7F]/) || japaneseText.match(/[a-z]/i) || japaneseText.match(/[0-9]/) || key === "." || japaneseText === '') {
         // storage内にデータがあるかどうか、初めて保存するか 
         if (storageObject && storageObject.length > 0) {
 
@@ -78,7 +77,7 @@ textarea.addEventListener('keydown', (event) => {
     const storage2 = localStorage.getItem('keyCode');
     const storageObject2 = JSON.parse(storage2);
 
-    if (keyCode.match(/[a-z]/i) && keyCode.length === 1 || keyCode.match(/[0-9]/) || key === ".") {
+    if (keyCode.match(/[a-z]/i) && keyCode.length === 1 || keyCode.match(/[0-9]/) || keyCode === "period") {
         if (storageObject2 && storageObject2.length > 0) {
             // storageがある場合の処理
             storageObject2.push({
@@ -95,10 +94,22 @@ textarea.addEventListener('keydown', (event) => {
             keyCodeArray.push(keyCodeObject);
             localStorage.setItem('keyCode', JSON.stringify(keyCodeArray));
         }
-    } else if (storageObject?.length > 0 && keyCode === 'backspace' && storageObject[storageObject.length - 1].japaneseText.length === 1) {
-        localStorage.clear();
-    }
+    } else if (storageObject2 && keyCode ==='backspace') {
 
+        if (textarea.value) {
+            storageObject2.push({
+                keyCode,
+            })
+            localStorage.setItem('keyCode', JSON.stringify(storageObject2));
+        }
+
+    } else if (storageObject && storageObject[storageObject - 1].japaneseText === ''){
+        storageObject.length = storageObject.length - 1;
+        localStorage.setItem('key', JSON.stringify(storageObject));
+    } else {
+        storageObject.length = storageObject.length - 1;
+        localStorage.setItem('key', JSON.stringify(storageObject));
+    }
 });
 
 function setup() {
