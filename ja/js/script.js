@@ -4,6 +4,8 @@
 
 const storage = localStorage.getItem('key');
 console.log(JSON.parse(storage));
+const storage2 = localStorage.getItem('keyCode');
+console.log(JSON.parse(storage2));
 
 // ページを開いた時刻を取得
 const justNow = Date.now();
@@ -50,7 +52,7 @@ const type = (event) =>{
         } else {
             const time = now - justNow;
 
-            let data = {
+            const data = {
                 items : [{
                     now,
                     japaneseText,
@@ -64,6 +66,8 @@ const type = (event) =>{
 
 // inputイベント
 textarea.addEventListener('input', type);
+
+let keyCodeArray = [];
 
 textarea.addEventListener('keydown', (event) => {
     const keyCode = event.code.replace('Key', '').toLowerCase();
@@ -84,7 +88,22 @@ textarea.addEventListener('keydown', (event) => {
             localStorage.setItem('key', JSON.stringify(storageObject));
             */
             localStorage.clear();
-        }   
+        } else if (keyCode.match(/[a-z]/i) && keyCode.length === 1 || keyCode.match(/[0-9]/)) {
+            // データをstorageから取り出す
+            const storage2 = localStorage.getItem('keyCode');
+            const storageObject2 = JSON.parse(storage2);
+
+            storageObject2.push({
+                keyCode
+            });
+            localStorage.setItem('keyCode', JSON.stringify(storageObject2));
+    }
+    } else if (keyCode.match(/[a-z]/i) && keyCode.length === 1 || keyCode.match(/[0-9]/)) {
+            const keyCodeObject = {
+                keyCode: keyCode
+            };
+            keyCodeArray.push(keyCodeObject);
+            localStorage.setItem('keyCode', JSON.stringify(keyCodeArray));
     }
 });
 
