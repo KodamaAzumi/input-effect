@@ -1,7 +1,6 @@
 // リロードすると消去される
 //localStorage.clear();
 // データ確認用
-
 const storage = localStorage.getItem('key');
 console.log(JSON.parse(storage));
 const storage2 = localStorage.getItem('keyCode');
@@ -24,7 +23,9 @@ const type = (event) =>{
     //const eventData = event.data;
     // textarea.value、event.data、event.target.value。
     const japaneseText = textarea.value;
-    console.log(japaneseText);
+    console.log(textarea.value);
+    //console.log(event.data);
+    //console.log(event.target.value);
 
     // タイプされた時の時間を取得
     const now = Date.now();
@@ -34,12 +35,29 @@ const type = (event) =>{
     const storageObject = JSON.parse(storage);
 
     // 条件式に当てはまる場合storageに保存する
-    if (japaneseText.match(/[^\x00-\x7F]/) || japaneseText.match(/[a-z]/i) || japaneseText.match(/[0-9]/) || key === "." || japaneseText === '') {
+    if (japaneseText.match(/[^\x00-\x7F]/)) {
         // storage内にデータがあるかどうか、初めて保存するか 
         if (storageObject && storageObject.length > 0) {
 
             const length = storageObject.length;
             const time = now - (storageObject[length - 1].now);
+
+            let count = 0;
+            for (let i = 1; i < japaneseText.length; i++) {
+                const charCode = japaneseText.charCodeAt(i);
+                if ((charCode >= 0xFF01 && charCode <= 0xFF5E)) {
+                    if (++count > 1) {
+                        console.log('全角アルファベットが1つ以上含まれてる');
+                        console.log(count);
+                        break;
+                    }
+                }
+            }
+            if (count === 1) {
+                console.log("全角アルファベットが1つ含まれてる");
+            } else if (count === 0) {
+                console.log("全角アルファベットが1つも含まれてない");
+            }
 
             storageObject.push({
                 now,
@@ -60,7 +78,12 @@ const type = (event) =>{
             };
             localStorage.setItem('key', JSON.stringify(data.items));
         }
-    } 
+    } if (japaneseText === '') {
+        const data = {
+            items : []
+        }
+        localStorage.setItem('key', JSON.stringify(data.items));
+    }
 };
 
 // inputイベント
@@ -162,10 +185,12 @@ function draw() {
             }
         }
         */
-        fill(255, 255, 255);
-        textSize(20);
-        textFont('Yu Gothic');
-        text(`${data[data.length - 1].japaneseText}`, x, y);
-        textAlign(LEFT, LEFT);
+        if (data[data.length - 1]) {
+            fill(255, 255, 255);
+            textSize(20);
+            textFont('Yu Gothic');
+            text(`${data[data.length - 1].japaneseText}`, x, y);
+            textAlign(LEFT, LEFT);
+        }
     }  
 }
