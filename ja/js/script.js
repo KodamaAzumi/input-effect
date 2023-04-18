@@ -66,6 +66,7 @@ const type = (event) =>{
 // inputイベント
 textarea.addEventListener('input', type);
 
+/*
 textarea.addEventListener('keydown', (event) => {
     // keyCodeのKeyを消去して、小文字にする。
     const keyCode = event.code.replace('Key', '').toLowerCase();
@@ -111,6 +112,8 @@ textarea.addEventListener('keydown', (event) => {
         localStorage.setItem('key', JSON.stringify(storageObject));
     }
 });
+
+*/
 
 function setup() {
 
