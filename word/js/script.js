@@ -54,7 +54,9 @@ stopButton.addEventListener('click', () => {
 });
 
 // キャプチャボタンをクリックしたときの処理
-captureButton.addEventListener('click', () => {
+const capture = async (event) => {
+    console.log(event);
+    const key = event.key;
 
     // 写真を撮った時の時刻
     const now = new Date();
@@ -73,7 +75,7 @@ captureButton.addEventListener('click', () => {
         //console.log(imageUrl);
 
         // // データをstorageから取り出す
-        const storage = localStorage.getItem('keyImage');
+        const storage = await localStorage.getItem('keyImage');
         const storageObject = JSON.parse(storage);
 
         // storage内にデータがあるかどうか、初めて保存するか
@@ -84,6 +86,7 @@ captureButton.addEventListener('click', () => {
                 hour,
                 min,
                 sec,
+                key,
             });
             localStorage.setItem('keyImage', JSON.stringify(storageObject));
         } else {
@@ -94,13 +97,27 @@ captureButton.addEventListener('click', () => {
                     hour,
                     min,
                     sec,
+                    key,
                 }]
             };
             localStorage.setItem('keyImage', JSON.stringify(imageData.items));
         }
 
+        // storageの画像を表示
+        const list =  document.getElementById('list');
+        list.innerHTML += `
+        <li id="li-storage">
+            <p>${hour} : ${min} : ${sec}</p>
+            <p>${key}</p>
+            <img class="img-storage" src="${imageUrl}"></img>
+        </li>
+        `;
+
     }
-});
+}
+//captureButton.addEventListener('click', capture);
+document.addEventListener('keydown', capture);
+
 
 // storageの画像を表示
 const storageObject = JSON.parse(storage);
@@ -110,10 +127,9 @@ for (let i = 0; i < storageObject.length; i++) {
     list.innerHTML += `
     <li id="li-storage">
         <p>${storageObject[i].hour} : ${storageObject[i].min} : ${storageObject[i].sec}</p>
+        <p>${storageObject[i].key}</p>
         <img class="img-storage" src="${storageObject[i].imageUrl}"></img>
     </li>
     `;
     //console.log(storageObject[i]);
 }
-
-
