@@ -1,0 +1,8 @@
+#video {
+    display: none;
+}
+
+img.img-storage{
+    width: 640;
+    height: 480;
+}
