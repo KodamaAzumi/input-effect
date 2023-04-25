@@ -1,0 +1,11 @@
+html {
+    background-color: antiquewhite;
+}
+
+#canvas-container {
+  height: 300px; /* 適切な高さを指定 */
+}
+
+canvas {
+  display: block; /* キャンバスをブロック要素にする */
+}
