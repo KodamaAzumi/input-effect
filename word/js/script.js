@@ -11,100 +11,96 @@ const dataClear = () => {
     location.reload();
 };
 
-const main =  () => {
-    
-    const video = document.getElementById('video');
-    const canvas = document.createElement('canvas');
-    canvas.width = 320; // 幅を指定
-    canvas.height = 240; // 高さを指定
-    const captureButton = document.getElementById('imageShot');
-    const startButton = document.getElementById('start');
-    const stopButton = document.getElementById('stop');
-    const preview = document.getElementById('preview');
-    let stream = null;
-    
-    // カメラを起動する関数
-    const startCamera = () => {
-        navigator.mediaDevices.getUserMedia({ video: true })
-          .then((s) => {
-            stream = s;
-            video.srcObject = stream;
-          })
-          .catch((error) => {
-            console.error('Media device error:', error);
-          });
-    };
 
-    // カメラを停止する関数
-    const stopCamera = () => {
-        if (stream) {
-          stream.getTracks().forEach((track) => track.stop());
-          stream = null;
-          video.srcObject = null;
-        }
-    };
+const video = document.getElementById('video');
+const canvas = document.createElement('canvas');
+canvas.width = 320; // 幅を指定
+canvas.height = 240; // 高さを指定
+const captureButton = document.getElementById('imageShot');
+const startButton = document.getElementById('start');
+const stopButton = document.getElementById('stop');
+const preview = document.getElementById('preview');
+let stream = null;
 
-    // スタートボタンをクリックしたときの処理
-    startButton.addEventListener('click', () => {
-        startCamera();
-    });
+// カメラを起動する関数
+const startCamera = () => {
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then((s) => {
+        stream = s;
+        video.srcObject = stream;
+        })
+        .catch((error) => {
+        console.error('Media device error:', error);
+        });
+};
 
-    // ストップボタンをクリックしたときの処理
-    stopButton.addEventListener('click', () => {
-        stopCamera();
-    });
-    
-    // キャプチャボタンをクリックしたときの処理
-    captureButton.addEventListener('click', () => {
+// カメラを停止する関数
+const stopCamera = () => {
+    if (stream) {
+        stream.getTracks().forEach((track) => track.stop());
+        stream = null;
+        video.srcObject = null;
+    }
+};
 
-        // 写真を撮った時の時刻
-        const now = new Date();
-        const hour = now.getHours();
-        const min = now.getMinutes();
-        const sec = now.getSeconds();
+// スタートボタンをクリックしたときの処理
+startButton.addEventListener('click', () => {
+    startCamera();
+});
 
-        if (stream) {
-            // キャンバスにビデオ画像を描画する
-            const context = canvas.getContext('2d');
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+// ストップボタンをクリックしたときの処理
+stopButton.addEventListener('click', () => {
+    stopCamera();
+});
 
-            // キャプチャした画像をプレビューする
-            preview.src = canvas.toDataURL();
-            const imageUrl = preview.src;
-            //console.log(imageUrl);
+// キャプチャボタンをクリックしたときの処理
+captureButton.addEventListener('click', () => {
 
-            // // データをstorageから取り出す
-            const storage = localStorage.getItem('keyImage');
-            const storageObject = JSON.parse(storage);
+    // 写真を撮った時の時刻
+    const now = new Date();
+    const hour = now.getHours();
+    const min = now.getMinutes();
+    const sec = now.getSeconds();
 
-            // storage内にデータがあるかどうか、初めて保存するか
-            if (storageObject && storageObject.length > 0) {
-                storageObject.push({
+    if (stream) {
+        // キャンバスにビデオ画像を描画する
+        const context = canvas.getContext('2d');
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        // キャプチャした画像をプレビューする
+        preview.src = canvas.toDataURL();
+        const imageUrl = preview.src;
+        //console.log(imageUrl);
+
+        // // データをstorageから取り出す
+        const storage = localStorage.getItem('keyImage');
+        const storageObject = JSON.parse(storage);
+
+        // storage内にデータがあるかどうか、初めて保存するか
+        if (storageObject && storageObject.length > 0) {
+            storageObject.push({
+                now,
+                imageUrl,
+                hour,
+                min,
+                sec,
+            });
+            localStorage.setItem('keyImage', JSON.stringify(storageObject));
+        } else {
+            const imageData = {
+                items : [{
                     now,
                     imageUrl,
                     hour,
                     min,
                     sec,
-                });
-                localStorage.setItem('keyImage', JSON.stringify(storageObject));
-            } else {
-                const imageData = {
-                    items : [{
-                        now,
-                        imageUrl,
-                        hour,
-                        min,
-                        sec,
-                    }]
-                };
-                localStorage.setItem('keyImage', JSON.stringify(imageData.items));
-            }
-  
+                }]
+            };
+            localStorage.setItem('keyImage', JSON.stringify(imageData.items));
         }
-      });
 
-}
-  main();
+    }
+});
 
 // storageの画像を表示
 const storageObject = JSON.parse(storage);
