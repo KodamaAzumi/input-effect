@@ -158,9 +158,9 @@ function draw() {
     const data = JSON.parse(localStorage.getItem('key'));
     
     if(data) {
-    // 文字の初期値
-    let x = 10;
-    let y = 30;
+        // 文字の初期値
+        let x = 10;
+        let y = 30;
 
         /*
         for (let i = 0; i < data.length; i++) {

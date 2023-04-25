@@ -87,9 +87,9 @@ function draw() {
     const data = JSON.parse(localStorage.getItem('keyEn'));
     
     if(data) {
-    // 文字の初期値
-    let x = 10;
-    let y = 30;
+        // 文字の初期値
+        let x = 10;
+        let y = 30;
 
         for (let i = 0; i < data.length; i++) {
 
@@ -105,10 +105,10 @@ function draw() {
                 textAlign(LEFT, LEFT);
                 // テキストの幅がcanvasの幅を超えた場合、y座標を下げる
                 if (x + textWidth(data[i].key) + 20 > width - 15) {
-                x = 10;
-                y += 35;
+                    x = 10;
+                    y += 35;
                 } else {
-                x += textWidth(data[i].key) + 15;
+                    x += textWidth(data[i].key) + 15;
                 }
             }
         }
