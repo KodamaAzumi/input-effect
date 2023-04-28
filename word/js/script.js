@@ -11,7 +11,6 @@ const dataClear = () => {
     location.reload();
 };
 
-
 const video = document.getElementById('video');
 const canvas = document.createElement('canvas');
 canvas.width = 320; // 幅を指定
@@ -74,7 +73,7 @@ const capture = async (event) => {
         const imageUrl = preview.src;
         //console.log(imageUrl);
 
-        // // データをstorageから取り出す
+        // データをstorageから取り出す
         const storage = await localStorage.getItem('keyImage');
         const storageObject = JSON.parse(storage);
 
@@ -122,14 +121,17 @@ document.addEventListener('keydown', capture);
 // storageの画像を表示
 const storageObject = JSON.parse(storage);
 const list =  document.getElementById('list');
-for (let i = 0; i < storageObject.length; i++) {
-    
-    list.innerHTML += `
-    <li id="li-storage">
-        <p>${storageObject[i].hour} : ${storageObject[i].min} : ${storageObject[i].sec}</p>
-        <p>${storageObject[i].key}</p>
-        <img class="img-storage" src="${storageObject[i].imageUrl}"></img>
-    </li>
-    `;
-    //console.log(storageObject[i]);
+if (storageObject) {
+    for (let i = 0; i < storageObject.length; i++) {
+        
+        list.innerHTML += `
+        <li id="li-storage">
+            <p>${storageObject[i].hour} : ${storageObject[i].min} : ${storageObject[i].sec}</p>
+            <p>${storageObject[i].key}</p>
+            <img class="img-storage" src="${storageObject[i].imageUrl}"></img>
+        </li>
+        `;
+        //console.log(storageObject[i]);
+    }
 }
+    
