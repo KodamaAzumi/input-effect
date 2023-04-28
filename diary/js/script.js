@@ -16,40 +16,30 @@ const textarea = document.getElementById('textarea');
 
 const type = (event) =>{
     let japaneseText = textarea.value;
+    console.log(japaneseText.length);
 
     // 改行を除去する
     japaneseText = japaneseText.replace(/\r?\n/g, '');
     japaneseText = japaneseText.replace(/(.{18})/g, "$1\n");
 
-    // データをstorageから取り出す
-    const storage = localStorage.getItem('key');
-    const storageObject = JSON.parse(storage);;
-
     // 条件式に当てはまる場合storageに保存する
     if (japaneseText.match(/[^\x00-\x7F]/)) {
-        // storage内にデータがあるかどうか、初めて保存するか 
-        if (storageObject && storageObject.length > 0) {
-
-            storageObject.push({
-                japaneseText,
-            });
-            localStorage.setItem('key', JSON.stringify(storageObject));
-
-        } else {
-
+        if (japaneseText.length <= 234 + 13) {
             const data = {
                 items : [{
                     japaneseText,
                 }]
             };
             localStorage.setItem('key', JSON.stringify(data.items));
+        } else {
+            console.log('yeah');
         }
-    } if (japaneseText === '') {
+    } else if (japaneseText === '') {
         const data = {
             items : []
         }
         localStorage.setItem('key', JSON.stringify(data.items));
-    }
+    } 
 };
 
 // inputイベント
@@ -61,10 +51,12 @@ function setup() {
     const p5Canvas = createCanvas(500, 500);
     p5Canvas.parent('p5Canvas');
 
+    pixelDensity(1);
+
     // キャンバスを保存する
     const saveButton = document.getElementById('canvasSave');
     saveButton.addEventListener('click', () => {
-        saveCanvas(p5Canvas, `Diary${year()}${month()}${day()}${hour()}${second()}${minute()}`, 'jpg');
+        saveCanvas(p5Canvas, `Diary${year()}${month()}${day()}${hour()}${second()}${minute()}`, 'png');
     });
 
 }
@@ -93,6 +85,5 @@ function draw() {
             textAlign(LEFT, LEFT);
             text(`${data[data.length - 1].japaneseText}`, x, y);
         }
-    }  
-
+    }
 }
