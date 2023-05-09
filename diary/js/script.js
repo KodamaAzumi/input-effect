@@ -1,7 +1,7 @@
 // リロードすると消去される
 //localStorage.clear();
 // データ確認用
-const storage = localStorage.getItem('key');
+const storage = localStorage.getItem('keyDiary');
 console.log(JSON.parse(storage));
 
 // storage内のデータを消去する
@@ -30,7 +30,7 @@ const type = (event) =>{
                     japaneseText,
                 }]
             };
-            localStorage.setItem('key', JSON.stringify(data.items));
+            localStorage.setItem('keyDiary', JSON.stringify(data.items));
         } else {
             console.log('yeah');
         }
@@ -38,7 +38,7 @@ const type = (event) =>{
         const data = {
             items : []
         }
-        localStorage.setItem('key', JSON.stringify(data.items));
+        localStorage.setItem('keyDiary', JSON.stringify(data.items));
     } 
 };
 
@@ -65,13 +65,14 @@ function draw() {
 
     background(255);
 
-    const data = JSON.parse(localStorage.getItem('key'));
+    const data = JSON.parse(localStorage.getItem('keyDiary'));
 
     fill(0, 0, 0);
     textSize(25);
     textFont('Yu Gothic');
     textAlign(LEFT, LEFT);
-    text(`${year()}年${month()}月${day()}日`, 20, 40);
+    //text(`${year()}年${month()}月${day()}日`, 20, 40);
+    text(`2023年4月21日`, 20, 40);
     
     if(data) {
         // 文字の初期値
