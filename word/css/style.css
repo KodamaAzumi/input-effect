@@ -2,7 +2,13 @@
     display: none;
 }
 
-img.img-storage{
-    width: 640;
-    height: 480;
+.li-storage {
+    list-style-type: none;
+}
+
+.key-word {
+    font-size: 64px;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
 }

@@ -52,6 +52,9 @@ stopButton.addEventListener('click', () => {
     stopCamera();
 });
 
+// classの数をカウントする
+let count = 0;
+
 // キャプチャボタンをクリックしたときの処理
 const capture = async (event) => {
     console.log(event);
@@ -103,15 +106,22 @@ const capture = async (event) => {
         }
 
         // storageの画像を表示
+        count += 1;
         const list =  document.getElementById('list');
-        list.innerHTML += `
-        <li id="li-storage">
+        list.innerHTML +=  `
+        <li class="li-storage">
             <p>${hour} : ${min} : ${sec}</p>
-            <p>${key}</p>
+            <p class='key-word'>${key}</p>
             <img class="img-storage" src="${imageUrl}"></img>
         </li>
         `;
-
+        document.getElementsByClassName('li-storage')[count - 1].style.listStyleType = 'none';
+        const keyWord = document.getElementsByClassName(`key-word`);
+        keyWord[count - 1].style.fontSize = '64px';
+        keyWord[count - 1].style.backgroundImage = `url(${imageUrl})`;
+        keyWord[count - 1].style.backgroundClip = 'text';
+        keyWord[count - 1].style.webkitBackgroundClip = "text";
+        keyWord[count - 1].style.color = 'transparent';
     }
 }
 //captureButton.addEventListener('click', capture);
@@ -124,13 +134,14 @@ const list =  document.getElementById('list');
 if (storageObject) {
     for (let i = 0; i < storageObject.length; i++) {
         
-        list.innerHTML += `
-        <li id="li-storage">
+        list.innerHTML += `a
+        <li class="li-storage">
             <p>${storageObject[i].hour} : ${storageObject[i].min} : ${storageObject[i].sec}</p>
-            <p>${storageObject[i].key}</p>
+            <p class='key-word'>${storageObject[i].key}</p>
             <img class="img-storage" src="${storageObject[i].imageUrl}"></img>
         </li>
         `;
+        document.getElementsByClassName('key-word')[i].style.backgroundImage = `url(${storageObject[i].imageUrl})`;
         //console.log(storageObject[i]);
     }
 }
