@@ -15,7 +15,6 @@ const video = document.getElementById('video');
 const canvas = document.createElement('canvas');
 canvas.width = 320; // 幅を指定
 canvas.height = 240; // 高さを指定
-const captureButton = document.getElementById('imageShot');
 const startButton = document.getElementById('start');
 const stopButton = document.getElementById('stop');
 const preview = document.getElementById('preview');
@@ -124,7 +123,6 @@ const capture = async (event) => {
         keyWord[count - 1].style.color = 'transparent';
     }
 }
-//captureButton.addEventListener('click', capture);
 document.addEventListener('keydown', capture);
 
 
@@ -134,7 +132,7 @@ const list =  document.getElementById('list');
 if (storageObject) {
     for (let i = 0; i < storageObject.length; i++) {
         
-        list.innerHTML += `a
+        list.innerHTML += `
         <li class="li-storage">
             <p>${storageObject[i].hour} : ${storageObject[i].min} : ${storageObject[i].sec}</p>
             <p class='key-word'>${storageObject[i].key}</p>

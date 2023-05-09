@@ -9,33 +9,24 @@
     <title>image-input</title>
 </head>
 <body>
-    <!--
-    <form id="id_form" action="" method="">
-        <textarea id="textarea" type="text" rows="2"></textarea>
-    </form>
-    <button id="canvasSave">保存</button>
-    <button onClick="dataClear()">すべて消去</button>
-    -->
-    <video id="video" width="640" height="480" autoplay></video>
-    <button id="start">Start Camera</button>
-    <button id="stop">Stop Camera</button>
-    <!--
-    <button id="imageShot">写真を取る</button>
-    -->
-    <button onClick="dataClear()">storageを消去</button>
+
     <div id="ja-input"><a href="../ja/index.html">日本語版</a></div>
     <div id="en-input"><a href="../en/index.html">英語版</a></div>
     <div id="diary-input"><a href="../diary/index.html">日記作成</a></div>
+
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="start">Start Camera</button>
+    <button id="stop">Stop Camera</button>
+    <button onClick="dataClear()">storageを消去</button>
+
     <hr>
-    <!--
-    <div id="p5Canvas"></div>
-    -->
     <div>
         <img id="preview" width="320" height="240" src="images/image1.jpg">
     </div>
     <div>
         <ul id="list"></ul>
     </div>
+    
 </body>
 <script src="js/script.js"></script>
 </html>
