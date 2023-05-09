@@ -11,7 +11,6 @@ const dataClear = () => {
     location.reload();
 };
 
-/*
 const video = document.getElementById('video');
 const canvas = document.createElement('canvas');
 canvas.width = 320; // 幅を指定
@@ -41,6 +40,7 @@ const stopCamera = () => {
         video.srcObject = null;
     }
 };
+
 
 // スタートボタンをクリックしたときの処理
 startButton.addEventListener('click', () => {
@@ -107,40 +107,32 @@ const capture = async (event) => {
 
         // storageの画像を表示
         count += 1;
-        const list =  document.getElementById('list');
-        list.innerHTML +=  `
-        <li class="li-storage">
-            <p class='key-word'>${key}</p>
-            <p>${hour} : ${min} : ${sec}</p>
-            <img class="img-storage" src="${imageUrl}"></img>
-        </li>
+        const imagePara =  document.getElementById('image-para');
+        imagePara.innerHTML +=  `
+        <span class='key-word'>${key}</span>
         `;
-        document.getElementsByClassName('li-storage')[count - 1].style.listStyleType = 'none';
         const keyWord = document.getElementsByClassName(`key-word`);
         keyWord[count - 1].style.fontSize = '64px';
-        //keyWord[count - 1].style.backgroundImage = `url(${imageUrl})`;
-        //keyWord[count - 1].style.backgroundClip = 'text';
-        //keyWord[count - 1].style.webkitBackgroundClip = "text";
-        //keyWord[count - 1].style.color = 'transparent';
+        keyWord[count - 1].style.backgroundImage = `url(${imageUrl})`;
+        keyWord[count - 1].style.backgroundClip = 'text';
+        keyWord[count - 1].style.webkitBackgroundClip = "text";
+        keyWord[count - 1].style.color = 'transparent';
     }
 }
 document.addEventListener('keydown', capture);
-*/
+
 
 // storageの画像を表示
 const storageObject = JSON.parse(storage);
-const list =  document.getElementById('list');
+const imagePara =  document.getElementById('image-para');
 if (storageObject) {
     for (let i = 0; i < storageObject.length; i++) {
         
-        list.innerHTML += `
-        <li class="li-storage">
-            <p class='key-word'>${storageObject[i].key}</p>
-            <p>${storageObject[i].hour} : ${storageObject[i].min} : ${storageObject[i].sec}</p>
-            <img class="img-storage" src="${storageObject[i].imageUrl}"></img>
-        </li>
+        imagePara.innerHTML += `
+        <span class='key-word'>${storageObject[i].key}</span>
         `;
-        //document.getElementsByClassName('key-word')[i].style.backgroundImage = `url(${storageObject[i].imageUrl})`;
+        document.getElementsByClassName('key-word')[i].style.backgroundImage = `url(${storageObject[i].imageUrl})`;
+        //console.log(storageObject[i]);
     }
 }
     
