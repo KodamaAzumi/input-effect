@@ -80,43 +80,56 @@ const capture = async (event) => {
         const storage = await localStorage.getItem('keyImage');
         const storageObject = JSON.parse(storage);
 
-        // storage内にデータがあるかどうか、初めて保存するか
-        if (storageObject && storageObject.length > 0) {
-            storageObject.push({
-                now,
-                imageUrl,
-                hour,
-                min,
-                sec,
-                key,
-            });
-            localStorage.setItem('keyImage', JSON.stringify(storageObject));
-        } else {
-            const imageData = {
-                items : [{
+        if (key.match(/[a-z]/i) && key.length === 1 || key.match(/[0-9]/) || key === " " || key === "." || key === "'") {
+
+            // storage内にデータがあるかどうか、初めて保存するか
+            if (storageObject && storageObject.length > 0) {
+                storageObject.push({
                     now,
                     imageUrl,
                     hour,
                     min,
                     sec,
                     key,
-                }]
-            };
-            localStorage.setItem('keyImage', JSON.stringify(imageData.items));
-        }
+                });
+                localStorage.setItem('keyImage', JSON.stringify(storageObject));
+            } else {
+                const imageData = {
+                    items : [{
+                        now,
+                        imageUrl,
+                        hour,
+                        min,
+                        sec,
+                        key,
+                    }]
+                };
+                localStorage.setItem('keyImage', JSON.stringify(imageData.items));
+            }
 
-        // storageの画像を表示
-        count += 1;
-        const imagePara =  document.getElementById('image-para');
-        imagePara.innerHTML +=  `
-        <span class='key-word'>${key}</span>
-        `;
-        const keyWord = document.getElementsByClassName(`key-word`);
-        keyWord[count - 1].style.fontSize = '64px';
-        keyWord[count - 1].style.backgroundImage = `url(${imageUrl})`;
-        keyWord[count - 1].style.backgroundClip = 'text';
-        keyWord[count - 1].style.webkitBackgroundClip = "text";
-        keyWord[count - 1].style.color = 'transparent';
+            // storageの画像を表示
+            count += 1;
+            const imagePara =  document.getElementById('image-para');
+            imagePara.innerHTML +=  `
+            <span class='key-word'>${key}</span>
+            `;
+            const keyWord = document.getElementsByClassName(`key-word`);
+            keyWord[count - 1].style.fontSize = '64px';
+            keyWord[count - 1].style.backgroundImage = `url(${imageUrl})`;
+            keyWord[count - 1].style.backgroundClip = 'text';
+            keyWord[count - 1].style.webkitBackgroundClip = "text";
+            keyWord[count - 1].style.color = 'transparent';  
+
+        } else if (storageObject && storageObject.length && key ==='Backspace') {
+
+            // storageから消去
+            storageObject.length = storageObject.length - 1;
+            localStorage.setItem('keyImage', JSON.stringify(storageObject));
+
+            const keyWord = document.getElementsByClassName(`key-word`);
+            keyWord[count - 1].remove();
+            count -= 1;
+        }
     }
 }
 document.addEventListener('keydown', capture);
