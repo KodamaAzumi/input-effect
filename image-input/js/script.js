@@ -52,12 +52,8 @@ stopButton.addEventListener('click', () => {
     stopCamera();
 });
 
-// classの数をカウントする
-let count = 0;
-
-// キャプチャボタンをクリックしたときの処理
+// 写真を取るときの処理
 const capture = async (event) => {
-    console.log(event);
     const key = event.key;
 
     // 写真を撮った時の時刻
@@ -67,32 +63,36 @@ const capture = async (event) => {
     const sec = now.getSeconds();
 
     if (stream) {
-        // キャンバスにビデオ画像を描画する
-        const context = canvas.getContext('2d');
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        // キャプチャした画像をプレビューする
-        preview.src = canvas.toDataURL();
-        const imageUrl = preview.src;
-        //console.log(imageUrl);
-
-        // データをstorageから取り出す
-        const storage = await localStorage.getItem('keyImage');
-        const storageObject = JSON.parse(storage);
-
         if (key.match(/[a-z]/i) && key.length === 1 || key.match(/[0-9]/) || key === " " || key === "." || key === "'") {
+
+             // キャンバスにビデオ画像を描画する
+            const context = canvas.getContext('2d');
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            // 画像の容量を変更する
+            const quality = 0.85;
+            const imageUrl = canvas.toDataURL('image/jpeg', quality);
+        
+            // キャプチャした画像をプレビューする
+            preview.src = imageUrl;
+
+            // データをstorageから取り出す
+            let storage = await localStorage.getItem('keyImage');
+            let storageObject = JSON.parse(storage);
 
             // storage内にデータがあるかどうか、初めて保存するか
             if (storageObject && storageObject.length > 0) {
-                storageObject.push({
-                    now,
-                    imageUrl,
-                    hour,
-                    min,
-                    sec,
-                    key,
-                });
-                localStorage.setItem('keyImage', JSON.stringify(storageObject));
+                if (storageObject.length < 140) {
+                    storageObject.push({
+                        now,
+                        imageUrl,
+                        hour,
+                        min,
+                        sec,
+                        key,
+                    });
+                    localStorage.setItem('keyImage', JSON.stringify(storageObject));
+                }
             } else {
                 const imageData = {
                     items : [{
@@ -107,28 +107,38 @@ const capture = async (event) => {
                 localStorage.setItem('keyImage', JSON.stringify(imageData.items));
             }
 
-            // storageの画像を表示
-            count += 1;
-            const imagePara =  document.getElementById('image-para');
-            imagePara.innerHTML +=  `
-            <span class='key-word'>${key}</span>
-            `;
-            const keyWord = document.getElementsByClassName(`key-word`);
-            keyWord[count - 1].style.fontSize = '64px';
-            keyWord[count - 1].style.backgroundImage = `url(${imageUrl})`;
-            keyWord[count - 1].style.backgroundClip = 'text';
-            keyWord[count - 1].style.webkitBackgroundClip = "text";
-            keyWord[count - 1].style.color = 'transparent';  
+            // データをstorageから取り出す
+            storage = localStorage.getItem('keyImage');
+            storageObject = JSON.parse(storage);
+            const length = storageObject.length;
 
-        } else if (storageObject && storageObject.length && key ==='Backspace') {
+            // storageの画像を表示
+            if (storageObject && length < 140) {
+                const imagePara =  document.getElementById('image-para');
+                imagePara.innerHTML +=  `
+                <span class='key-word'>${key}</span>
+                `;
+                const keyWord = document.getElementsByClassName(`key-word`);
+                keyWord[length -1].style.fontSize = '64px';
+                keyWord[length -1].style.backgroundImage = `url(${imageUrl})`;
+                keyWord[length -1].style.backgroundClip = 'text';
+                keyWord[length -1].style.webkitBackgroundClip = "text";
+                keyWord[length -1].style.color = 'transparent';
+            }
+
+        } else if (key ==='Backspace') {
+
+            console.log('ok');
+            // データをstorageから取り出す
+            const storage = localStorage.getItem('keyImage');
+            const storageObject = JSON.parse(storage);
 
             // storageから消去
             storageObject.length = storageObject.length - 1;
             localStorage.setItem('keyImage', JSON.stringify(storageObject));
 
             const keyWord = document.getElementsByClassName(`key-word`);
-            keyWord[count - 1].remove();
-            count -= 1;
+            keyWord[storageObject.length].remove();
         }
     }
 }
