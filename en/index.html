@@ -11,20 +11,31 @@
 <body>
 
     <h1>英語版</h1>
-    <div id="ja-input"><a href="../ja/index.html">日本語版</a></div>
-    <div id="diary-input"><a href="../diary/index.html">日記作成</a></div>
-    <div id="image-timeline"><a href="../image-timeline/index.html">タイムライン</a></div>
-    <div id="image-input"><a href="../image-input/index.html">画像文字</a></div>
-    <br>
-
+    <div>
+        <p>
+            キーボード入力速度が文字の不透明度に反映されます。半角アルファベットにしか反応しません。<br>
+            保存：画像が保存されます。<br>
+            全てを消去：文字が全て消去されます。
+        </p>
+    </div>
     <form id="id_form" action="" method="">
         <textarea id="textarea" type="text" rows="2"></textarea>
     </form>
     <button id="canvasSave">保存</button>
     <button onClick="dataClear()">すべて消去</button>
+
     <hr>
-    <div id="p5Canvas"></div>
-    
+
+    <div class="container">
+        <div id="p5Canvas" class="element"></div>
+        <div id="anker" class="element">
+            <div id="ja-input"><a href="../ja/index.html">日本語版</a></div>
+            <div id="diary-input"><a href="../diary/index.html">日記作成</a></div>
+            <div id="image-timeline"><a href="../image-timeline/index.html">タイムライン</a></div>
+            <div id="image-input"><a href="../image-input/index.html">画像合成文字</a></div>
+        </div>
+    </div>
+
 </body>
 <script src="js/script.js"></script>
 </html>

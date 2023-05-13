@@ -71,8 +71,8 @@ function draw() {
     textSize(25);
     textFont('Yu Gothic');
     textAlign(LEFT, LEFT);
-    //text(`${year()}年${month()}月${day()}日`, 20, 40);
-    text(`2023年4月21日`, 20, 40);
+    text(`${year()}年${month()}月${day()}日`, 20, 40);
+    //text(`2023年4月21日`, 20, 40);
     
     if(data) {
         // 文字の初期値

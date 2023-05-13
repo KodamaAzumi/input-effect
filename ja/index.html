@@ -11,12 +11,11 @@
 <body>
 
     <h1>日本語版</h1>
-    <div id="en-input"><a href="../en/index.html">英語版</a></div>
-    <div id="diary-input"><a href="../diary/index.html">日記作成</a></div>
-    <div id="image-timeline"><a href="../image-timeline/index.html">タイムライン</a></div>
-    <div id="image-input"><a href="../image-input/index.html">画像文字</a></div>
-    <br>
-
+    <div>
+        <p>
+            制作中です。
+        </p>
+    </div>
     <form id="id_form" action="" method="">
         <textarea id="textarea" type="text" rows="2"></textarea>
     </form>
@@ -24,8 +23,17 @@
     <button onClick="dataClear()">すべて消去</button>
 
     <hr>
-    <div id="p5Canvas"></div>
-    
+
+    <div class="container">
+        <div id="p5Canvas" class="element"></div>
+        <div id="anker" class="element">
+            <div id="en-input"><a href="../en/index.html">英語版</a></div>
+            <div id="diary-input"><a href="../diary/index.html">日記作成</a></div>
+            <div id="image-timeline"><a href="../image-timeline/index.html">タイムライン</a></div>
+            <div id="image-input"><a href="../image-input/index.html">画像合成文字</a></div>
+        </div>
+    </div>
+
 </body>
 <script src="js/script.js"></script>
 </html>
