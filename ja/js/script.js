@@ -18,10 +18,8 @@ const justNow = Date.now();
 const textarea = document.getElementById('textarea');
 
 const type = (event) =>{
-    //const eventData = event.data;
-    // textarea.value、event.data、event.target.value。
     const japaneseText = textarea.value;
-    console.log(textarea.value);
+    console.log(japaneseText);
     //console.log(event.data);
     //console.log(event.target.value);
 
@@ -40,24 +38,6 @@ const type = (event) =>{
             const length = storageObject.length;
             const time = now - (storageObject[length - 1].now);
 
-            let count = 0;
-            for (let i = 1; i < japaneseText.length; i++) {
-                const charCode = japaneseText.charCodeAt(i);
-                if ((charCode >= 0xFF01 && charCode <= 0xFF5E)) {
-                    if (++count > 1) {
-                        console.log('全角アルファベットが1つ以上含まれてる');
-                        console.log(count);
-                        break;
-                    }
-                }
-            }
-            if (count === 1) {
-                console.log("全角アルファベットが1つ含まれてる");
-            } else if (count === 0) {
-                console.log("全角アルファベットが1つも含まれてない");
-            }
-
-            console.log(japaneseText.length);
             if (japaneseText.length <= 140 + 13) {
                 storageObject.push({
                     now,
