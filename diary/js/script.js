@@ -7,7 +7,6 @@ console.log(JSON.parse(storage));
 
 // storage内のデータを消去する
 const dataClear = () => {
-    console.log('押した');
     localStorage.clear();
     location.reload();
 };
@@ -25,7 +24,8 @@ const type = (event) =>{
 
     // 条件式に当てはまる場合storageに保存する
     if (japaneseText.match(/[^\x00-\x7F]/)) {
-
+        
+        // japaneseTextが140字以下なら保存する
         if (japaneseText.length <= 140 + 13) {
             const data = {
                 items : [{

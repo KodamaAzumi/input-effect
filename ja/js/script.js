@@ -1,5 +1,6 @@
 // リロードすると消去される
 //localStorage.clear();
+
 // データ確認用
 const storage = localStorage.getItem('key');
 console.log(JSON.parse(storage));
@@ -11,7 +12,6 @@ const justNow = Date.now();
 
 // storage内のデータを消去する
 const dataClear = () => {
-    console.log('押した');
     localStorage.clear();
     location.reload();
 };
@@ -59,12 +59,15 @@ const type = (event) =>{
                 console.log("全角アルファベットが1つも含まれてない");
             }
 
-            storageObject.push({
-                now,
-                japaneseText,
-                time
-            });
-            localStorage.setItem('key', JSON.stringify(storageObject));
+            console.log(japaneseText.length);
+            if (japaneseText.length <= 140 + 13) {
+                storageObject.push({
+                    now,
+                    japaneseText,
+                    time
+                });
+                localStorage.setItem('key', JSON.stringify(storageObject));
+            }
 
         } else {
             const time = now - justNow;

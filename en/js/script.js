@@ -1,9 +1,15 @@
 // リロードすると消去される
 //localStorage.clear();
-// データ確認用
 
+// データ確認用
 const storage = localStorage.getItem('keyEn');
 console.log(JSON.parse(storage));
+
+// storage内のデータを消去する
+const dataClear = () => {
+    localStorage.clear();
+    location.reload();
+};
 
 // ページを開いた時刻を取得
 const justNow = Date.now();
@@ -117,10 +123,3 @@ function draw() {
         }
     }  
 }
-
-// storage内のデータを消去する
-const dataClear = () => {
-    console.log('押した');
-    localStorage.clear();
-    location.reload();
-};
