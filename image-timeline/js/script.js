@@ -3,7 +3,7 @@
 
 // データ確認用
 const storage = localStorage.getItem('keyImage');
-console.log(JSON.parse(storage));
+console.log(JSON.parse(storage) || []);
 
 // storage内のデータを消去する
 const dataClear = () => {
@@ -78,7 +78,7 @@ const capture = async (event) => {
 
         // データをstorageから取り出す
         const storage = await localStorage.getItem('keyImage');
-        const storageObject = JSON.parse(storage);
+        const storageObject = JSON.parse(storage) || [];
 
         // storage内にデータがあるかどうか、初めて保存するか
         if (storageObject && storageObject.length > 0) {
@@ -128,7 +128,7 @@ document.addEventListener('keydown', capture);
 */
 
 // storageの画像を表示
-const storageObject = JSON.parse(storage);
+const storageObject = JSON.parse(storage) || [];
 const list =  document.getElementById('list');
 if (storageObject) {
     for (let i = 0; i < storageObject.length; i++) {

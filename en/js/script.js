@@ -3,7 +3,7 @@
 
 // データ確認用
 const storage = localStorage.getItem('keyEn');
-console.log(JSON.parse(storage));
+console.log(JSON.parse(storage) || []);
 
 // storage内のデータを消去する
 const dataClear = () => {
@@ -23,7 +23,7 @@ const type = (event) =>{
 
     // // データをstorageから取り出す
     const storage = localStorage.getItem('keyEn');
-    const storageObject = JSON.parse(storage);
+    const storageObject = JSON.parse(storage) || [];
     console.log(storageObject);
 
     // 条件に当てはまる場合storageに保存する
@@ -93,7 +93,7 @@ function draw() {
 
     background(160);
 
-    const data = JSON.parse(localStorage.getItem('keyEn'));
+    const data = JSON.parse(localStorage.getItem('keyEn')) || [];
     
     if(data) {
         // 文字の初期値

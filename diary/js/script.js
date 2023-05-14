@@ -3,7 +3,7 @@
 
 // データ確認用
 const storage = localStorage.getItem('keyDiary');
-console.log(JSON.parse(storage));
+console.log(JSON.parse(storage) || []);
 
 // storage内のデータを消去する
 const dataClear = () => {
@@ -68,7 +68,7 @@ function draw() {
 
     background(255);
 
-    const data = JSON.parse(localStorage.getItem('keyDiary'));
+    const data = JSON.parse(localStorage.getItem('keyDiary')) || [];
 
     fill(0, 0, 0);
     textSize(25);
