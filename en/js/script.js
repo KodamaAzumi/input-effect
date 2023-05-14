@@ -27,14 +27,17 @@ const type = (event) =>{
 
             const length = storageObject.length;
             const time = now - (storageObject[length - 1].now);
-            //console.log(time);
 
-            storageObject.push({
-                now,
-                key,
-                time
-            });
-            localStorage.setItem('keyEn', JSON.stringify(storageObject));
+            // 140字未満だったら保存する
+            if (storageObject.length < 140) {
+                storageObject.push({
+                    now,
+                    key,
+                    time
+                });
+                localStorage.setItem('keyEn', JSON.stringify(storageObject));
+            }
+
         } else {
 
             const time = now - justNow;
