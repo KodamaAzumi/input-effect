@@ -2,19 +2,17 @@
 //localStorage.clear();
 
 // データ確認用
-const storage = localStorage.getItem('key');
+const storage = localStorage.getItem('keyJp');
 console.log(JSON.parse(storage));
-const storage2 = localStorage.getItem('keyCode');
-console.log(JSON.parse(storage2));
-
-// ページを開いた時刻を取得
-const justNow = Date.now();
 
 // storage内のデータを消去する
 const dataClear = () => {
     localStorage.clear();
     location.reload();
 };
+
+// ページを開いた時刻を取得
+const justNow = Date.now();
 
 // inputイベントを使用した場合
 const textarea = document.getElementById('textarea');
@@ -31,7 +29,7 @@ const type = (event) =>{
     const now = Date.now();
 
     // データをstorageから取り出す
-    const storage = localStorage.getItem('key');
+    const storage = localStorage.getItem('keyJp');
     const storageObject = JSON.parse(storage);
 
     // 条件式に当てはまる場合storageに保存する
@@ -66,7 +64,7 @@ const type = (event) =>{
                     japaneseText,
                     time
                 });
-                localStorage.setItem('key', JSON.stringify(storageObject));
+                localStorage.setItem('keyJp', JSON.stringify(storageObject));
             }
 
         } else {
@@ -79,67 +77,18 @@ const type = (event) =>{
                     time
                 }]
             };
-            localStorage.setItem('key', JSON.stringify(data.items));
+            localStorage.setItem('keyJp', JSON.stringify(data.items));
         }
     } if (japaneseText === '') {
         const data = {
             items : []
         }
-        localStorage.setItem('key', JSON.stringify(data.items));
+        localStorage.setItem('keyJp', JSON.stringify(data.items));
     }
 };
 
 // inputイベント
 textarea.addEventListener('input', type);
-
-/*
-textarea.addEventListener('keydown', (event) => {
-    // keyCodeのKeyを消去して、小文字にする。
-    const keyCode = event.code.replace('Key', '').toLowerCase();
-    console.log(keyCode);
-
-    // データをstorageから取り出す
-    const storage = localStorage.getItem('key');
-    const storageObject = JSON.parse(storage);
-    const storage2 = localStorage.getItem('keyCode');
-    const storageObject2 = JSON.parse(storage2);
-
-    if (keyCode.match(/[a-z]/i) && keyCode.length === 1 || keyCode.match(/[0-9]/) || keyCode === "period") {
-        if (storageObject2 && storageObject2.length > 0) {
-            // storageがある場合の処理
-            storageObject2.push({
-                keyCode
-            });
-            localStorage.setItem('keyCode', JSON.stringify(storageObject2));
-
-        } else {
-            // storageがない場合の処理
-            const keyCodeArray = [];
-            const keyCodeObject = {
-                keyCode: keyCode
-            };
-            keyCodeArray.push(keyCodeObject);
-            localStorage.setItem('keyCode', JSON.stringify(keyCodeArray));
-        }
-    } else if (storageObject2 && keyCode ==='backspace') {
-
-        if (textarea.value) {
-            storageObject2.push({
-                keyCode,
-            })
-            localStorage.setItem('keyCode', JSON.stringify(storageObject2));
-        }
-
-    } else if (storageObject && storageObject[storageObject - 1].japaneseText === ''){
-        storageObject.length = storageObject.length - 1;
-        localStorage.setItem('key', JSON.stringify(storageObject));
-    } else {
-        storageObject.length = storageObject.length - 1;
-        localStorage.setItem('key', JSON.stringify(storageObject));
-    }
-});
-
-*/
 
 function setup() {
 
@@ -158,7 +107,7 @@ function draw() {
 
     background(160);
 
-    const data = JSON.parse(localStorage.getItem('key'));
+    const data = JSON.parse(localStorage.getItem('keyJp'));
     
     if(data) {
         // 文字の初期値
