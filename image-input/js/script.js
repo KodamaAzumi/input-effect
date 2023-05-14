@@ -82,6 +82,7 @@ const capture = async (event) => {
 
             // storage内にデータがあるかどうか、初めて保存するか
             if (storageObject && storageObject.length > 0) {
+                // 140字未満だったら保存する
                 if (storageObject.length < 140) {
                     storageObject.push({
                         now,

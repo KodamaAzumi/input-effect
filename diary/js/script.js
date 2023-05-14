@@ -1,5 +1,6 @@
 // リロードすると消去される
 //localStorage.clear();
+
 // データ確認用
 const storage = localStorage.getItem('keyDiary');
 console.log(JSON.parse(storage));
@@ -24,7 +25,8 @@ const type = (event) =>{
 
     // 条件式に当てはまる場合storageに保存する
     if (japaneseText.match(/[^\x00-\x7F]/)) {
-        if (japaneseText.length <= 234 + 13) {
+
+        if (japaneseText.length <= 140 + 13) {
             const data = {
                 items : [{
                     japaneseText,
@@ -34,6 +36,7 @@ const type = (event) =>{
         } else {
             console.log('yeah');
         }
+        
     } else if (japaneseText === '') {
         const data = {
             items : []
