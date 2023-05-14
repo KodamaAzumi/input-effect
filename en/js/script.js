@@ -7,7 +7,7 @@ console.log(JSON.parse(storage));
 
 // storage内のデータを消去する
 const dataClear = () => {
-    localStorage.clear();
+    localStorage.removeItem('keyEn');
     location.reload();
 };
 

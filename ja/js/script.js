@@ -7,7 +7,7 @@ console.log(JSON.parse(storage) || []);
 
 // storage内のデータを消去する
 const dataClear = () => {
-    localStorage.clear();
+    localStorage.removeItem('keyJp');
     location.reload();
 };
 
@@ -92,7 +92,7 @@ function draw() {
 
     background(160);
 
-    const data = JSON.parse(localStorage.getItem('keyJp'));
+    const data = JSON.parse(localStorage.getItem('keyJp')) || [];
     
     if(data) {
         // 文字の初期値
