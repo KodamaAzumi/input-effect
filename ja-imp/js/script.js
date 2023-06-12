@@ -2,12 +2,12 @@
 //localStorage.clear();
 
 // データ確認用
-const storage = localStorage.getItem('keyJp');
+const storage = localStorage.getItem('keyJpImp');
 console.log(JSON.parse(storage) || []);
 
 // storage内のデータを消去する
 const dataClear = () => {
-    localStorage.removeItem('keyJp');
+    localStorage.removeItem('keyJpImp');
     location.reload();
 };
 
@@ -32,7 +32,7 @@ const loop = () => {
       `);
 
     // データをstorageから取り出す
-    const storage = localStorage.getItem('keyJp');
+    const storage = localStorage.getItem('keyJpImp');
     const storageObject = JSON.parse(storage) || []; 
 
     // storage内にデータがあるかどうか、初めて保存するか 
@@ -46,7 +46,7 @@ const loop = () => {
               timestamp,
               diff,
             });
-            localStorage.setItem('keyJp', JSON.stringify(storageObject));
+            localStorage.setItem('keyJpImp', JSON.stringify(storageObject));
         }
 
     } else {
@@ -58,7 +58,7 @@ const loop = () => {
                 diff,
             }]
         };
-        localStorage.setItem('keyJp', JSON.stringify(data.items));
+        localStorage.setItem('keyJpImp', JSON.stringify(data.items));
     }
 
     });
@@ -86,7 +86,7 @@ function draw() {
 
     background(160);
 
-    const data = JSON.parse(localStorage.getItem('keyJp')) || [];
+    const data = JSON.parse(localStorage.getItem('keyJpImp')) || [];
     
     if(data) {
         // 文字の初期値
