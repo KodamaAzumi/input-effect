@@ -11,6 +11,7 @@ const dataClear = () => {
     location.reload();
 };
 
+
 // ページを開いた時刻を取得
 const justNow = Date.now();
 
@@ -76,21 +77,27 @@ textarea.addEventListener('blur', () => {
     console.log('離れた');
 });
 
+
+// カーソルの情報
+let cursorVisible = false;
+let cursorTimer = 0;
+const cursorInterval = 500; // カーソルの点滅間隔（ミリ秒）
+
 function setup() {
 
     const p5Canvas = createCanvas(500, 500);
     p5Canvas.parent('p5Canvas');
 
-      // キャンバスを保存する
-      const saveButton = document.getElementById('canvasSave');
-      saveButton.addEventListener('click', () => {
-        saveCanvas(p5Canvas, `Diary${year()}${month()}${day()}${hour()}${second()}${minute()}`, 'jpg');
-      });
+    // キャンバスを保存する
+    const saveButton = document.getElementById('canvasSave');
+    saveButton.addEventListener('click', () => {
+        saveCanvas(p5Canvas, `memo${year()}${month()}${day()}${hour()}${second()}${minute()}`, 'jpg');
+    });
+
 
 }
 
 function draw() {
-
     background(160);
 
     const data = JSON.parse(localStorage.getItem('keyEn')) || [];
@@ -112,6 +119,7 @@ function draw() {
                 textFont('Yu Gothic');
                 text(`${data[i].key}`, x, y);
                 textAlign(LEFT, LEFT);
+
                 // テキストの幅がcanvasの幅を超えた場合、y座標を下げる
                 if (x + textWidth(data[i].key) + 20 > width - 15) {
                     x = 10;
@@ -121,5 +129,22 @@ function draw() {
                 }
             }
         }
-    }  
+
+        // カーソルを描画
+        if (document.activeElement === textarea && cursorVisible) {
+            push();
+            stroke(255);
+            line(x, y - 20, x, y + 5);
+            pop();
+        }
+
+        // カーソルの点滅制御
+        if (millis() - cursorTimer > cursorInterval) {
+            cursorVisible = !cursorVisible;
+            cursorTimer = millis();
+        }
+
+    }
 }
+
+
