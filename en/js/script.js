@@ -18,6 +18,7 @@ const justNow = Date.now();
 // タイプされた文字をstorageに保存する
 const type = (event) =>{
     const key = event.key;
+    console.log(key);
 
     // タイプされた時の時間を取得
     const now = Date.now();
@@ -28,7 +29,7 @@ const type = (event) =>{
     console.log(storageObject);
 
     // 条件に当てはまる場合storageに保存する
-    if (key.match(/[a-z]/i) && key.length === 1 || key.match(/[0-9]/) || key === " " || key === "." || key === "'" || key === "Enter") {
+    if (key.match(/[a-z]/i) && key.length === 1 || key.match(/[0-9]/)|| key.match(/^[!-/:-@[-`{-~]+$/) || key === " " || key === "Enter") {
         // storage内にデータがあるかどうか、初めて保存するか
         if (storageObject && storageObject.length > 0) {
 
@@ -59,8 +60,15 @@ const type = (event) =>{
             localStorage.setItem('keyEn', JSON.stringify(data.items));
         }
     } else if (storageObject && storageObject.length && key ==='Backspace') {
+        // 文字が消されたときの処理
         storageObject.length = storageObject.length - 1;
         localStorage.setItem('keyEn', JSON.stringify(storageObject));
+    } else if (!key.match(/^[^\x01-\x7E\xA1-\xDF]+$/) && key !== 'Shift' && key !== 'Backspace' && key !== 'Alt' && key !== 'Control' && key !== 'ArrowUp' && key !== 'ArrowRight' && key !== 'ArrowDown' && key !== 'ArrowLeft' && key !== 'Delete' && key !== 'ContextMenu' && key !== 'Meta' && key !== 'Tab' && key !== 'Unidentified') {
+        // 全角文字などが打たれた時の処理
+        textarea.disabled = true;
+        alert('その文字は打てません。');
+        textarea.disabled = false;
+        //console.log('This is 全角');
     }
 };
 
