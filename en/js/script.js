@@ -36,16 +36,13 @@ const type = (event) =>{
             const length = storageObject.length;
             const time = now - (storageObject[length - 1].now);
 
-            // 140字未満だったら保存する
-            if (storageObject.length < 140) {
-                storageObject.push({
-                    now,
-                    key,
-                    time
-                });
-                localStorage.setItem('keyEn', JSON.stringify(storageObject));
-            }
-
+            storageObject.push({
+                now,
+                key,
+                time
+            });
+            localStorage.setItem('keyEn', JSON.stringify(storageObject));
+        
         } else {
 
             const time = now - justNow;
@@ -119,8 +116,14 @@ function draw() {
 
             // Enterキーが押されたら改行する。
             if (data[i].key === 'Enter') {
-                x = 10;
-                y += 35;
+                if (y < height - 20) {
+                    x = 10;
+                    y += 35;
+                } else {
+                    // canvasの幅を超えた場合、データを消す
+                    data.length = data.length - 1;
+                    localStorage.setItem('keyEn', JSON.stringify(data));
+                }
             } else {
                 fill(255, 255, 255, Math.max(100, data[i].time));
                 textSize(20);
@@ -130,8 +133,14 @@ function draw() {
 
                 // テキストの幅がcanvasの幅を超えた場合、y座標を下げる
                 if (x + textWidth(data[i].key) + 20 > width - 15) {
-                    x = 10;
-                    y += 35;
+                    if (y < height - 20) {
+                        x = 10;
+                        y += 35;
+                    } else {
+                        // canvasの幅を超えた場合、データを消す
+                        data.length = data.length - 1;
+                        localStorage.setItem('keyEn', JSON.stringify(data));
+                    }
                 } else {
                     x += textWidth(data[i].key) + 15;
                 }
