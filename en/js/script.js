@@ -30,31 +30,34 @@ const type = (event) =>{
 
     // 条件に当てはまる場合storageに保存する
     if (key.match(/[a-z]/i) && key.length === 1 || key.match(/[0-9]/)|| key.match(/^[!-/:-@[-`{-~]+$/) || key === " " || key === "Enter") {
-        // storage内にデータがあるかどうか、初めて保存するか
-        if (storageObject && storageObject.length > 0) {
+        // F1-F12までを除く
+        if (!key.match(/^F[1-9]|F1[0-2]$/)) {
+            // storage内にデータがあるかどうか、初めて保存するか
+            if (storageObject && storageObject.length > 0) {
 
-            const length = storageObject.length;
-            const time = now - (storageObject[length - 1].now);
+                const length = storageObject.length;
+                const time = now - (storageObject[length - 1].now);
 
-            storageObject.push({
-                now,
-                key,
-                time
-            });
-            localStorage.setItem('keyEn', JSON.stringify(storageObject));
-        
-        } else {
-
-            const time = now - justNow;
-
-            const data = {
-                items : [{
+                storageObject.push({
                     now,
                     key,
                     time
-                }]
-            };
-            localStorage.setItem('keyEn', JSON.stringify(data.items));
+                });
+                localStorage.setItem('keyEn', JSON.stringify(storageObject));
+            
+            } else {
+
+                const time = now - justNow;
+
+                const data = {
+                    items : [{
+                        now,
+                        key,
+                        time
+                    }]
+                };
+                localStorage.setItem('keyEn', JSON.stringify(data.items));
+            }
         }
     } else if (storageObject && storageObject.length && key ==='Backspace') {
         // 文字が消されたときの処理
