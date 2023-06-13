@@ -11,59 +11,48 @@ const dataClear = () => {
     location.reload();
 };
 
+
 const textarea = new Textarea('#js-textarea');
 console.log(textarea);
+const output = document.querySelector('#js-output');
 
 const loop = () => {
-    console.log('----------')
-  
-    textarea.entityIds.forEach((entityId, i) => {
-      const { timestamp, value } = textarea.entity[entityId];
-      const prevEntityId = textarea.entityIds[i - 1];
-      let diff = 0;
-  
-      if (prevEntityId) {
-        diff = Math.max(timestamp - textarea.entity[prevEntityId].timestamp, 0);
-      }
-  
-      console.log(`文字列: ${value}
-        入力された時間（UNIX TIME）: ${timestamp}
-        ひとつ前の入力からの差分（ミリ秒）: ${diff}
-      `);
+  const fragment = document.createDocumentFragment();
+
+  output.innerHTML = '';
+
+  textarea.entityIds.forEach((entityId, i) => {
+    // 入力された順に文字情報を順に取得する
+    const { timestamp, value } = textarea.entity[entityId];
+    // ひとつ前の ID を取得する
+    const prevEntityId = textarea.entityIds[i - 1];
+    const span = document.createElement('span');
+    // ひとつ前の文字情報との時差
+    let diff = 0;
+
+    // ひとつ前の ID が見つからなければ、1文字目なので時差なし、になる
+    if (prevEntityId) {
+      diff = timestamp - textarea.entity[prevEntityId].timestamp;
+    };
 
     // データをstorageから取り出す
     const storage = localStorage.getItem('keyJpImp');
-    const storageObject = JSON.parse(storage) || []; 
-
-    // storage内にデータがあるかどうか、初めて保存するか 
-    if (storageObject && storageObject.length > 0) {
-
-        const length = storageObject.length;
-
-        if (length <= 140 + 13) {
-            storageObject.push({
-              value,
-              timestamp,
-              diff,
-            });
-            localStorage.setItem('keyJpImp', JSON.stringify(storageObject));
-        }
-
-    } else {
-
-        const data = {
-            items : [{
-                value,
-                timestamp,
-                diff,
-            }]
-        };
-        localStorage.setItem('keyJpImp', JSON.stringify(data.items));
-    }
-
+    const storageObject = JSON.parse(storage) || [];
+    storageObject.push({
+      value,
+      timestamp,
+      diff
     });
+    localStorage.setItem('keyJpImp', JSON.stringify(storageObject));
+    
+    span.style.paddingLeft = `${Math.max(diff / 4000, 1) * 4}em`;
+    span.appendChild(document.createTextNode(value));
+    fragment.appendChild(span);
+  });
+
+  output.appendChild(fragment);
+  window.requestAnimationFrame(loop);
   
-    window.requestAnimationFrame(loop);
 };
   
 window.requestAnimationFrame(loop);
