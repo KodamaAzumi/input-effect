@@ -34,6 +34,14 @@ const loop = () => {
     if (prevEntityId) {
       diff = timestamp - textarea.entity[prevEntityId].timestamp;
     };
+
+    const mathDiff = diff/(10 ** 3);
+    console.log(value, diff, mathDiff);
+
+    // 不透明度に適応させる
+    span.style.opacity = `${Math.max(mathDiff, 0.01)}`;
+    span.appendChild(document.createTextNode(value));
+    fragment.appendChild(span);
     
     // 文字間に適応させる
     /*
