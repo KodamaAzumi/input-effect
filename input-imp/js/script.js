@@ -34,20 +34,13 @@ const loop = () => {
     if (prevEntityId) {
       diff = timestamp - textarea.entity[prevEntityId].timestamp;
     };
-
-    // データをstorageから取り出す
-    const storage = localStorage.getItem('keyJpImp');
-    const storageObject = JSON.parse(storage) || [];
-    storageObject.push({
-      value,
-      timestamp,
-      diff
-    });
-    localStorage.setItem('keyJpImp', JSON.stringify(storageObject));
     
+    // 文字間に適応させる
+    /*
     span.style.paddingLeft = `${Math.max(diff / 4000, 1) * 4}em`;
     span.appendChild(document.createTextNode(value));
     fragment.appendChild(span);
+    */
   });
 
   output.appendChild(fragment);
