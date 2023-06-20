@@ -1,8 +1,10 @@
 /**
- * このクラスは diff.min.js に依存しています
+ * このクラスは diff.min.js, eventemitter3.umd.min.js に依存しています
  */
 class Textarea {
   constructor(selectors) {
+    this.ee = new EventEmitter3();
+
     this.el = document.querySelector(selectors);
     this.prevValue = ''; // 変更（input）直前の文字列
 
@@ -54,6 +56,8 @@ class Textarea {
             value,
           };
           this.entityIds.splice(j + caretCoord, 0, entityId);
+
+          this.ee.emit('added', { entityId });
         }
 
         // テキストの入力があったら input イベントが発生した回数をカウントアップ
