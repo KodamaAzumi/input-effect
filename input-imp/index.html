@@ -17,11 +17,17 @@
         </p>
     </div>
 
-    <form id="id_form" action="" method="">
-        <textarea id="js-textarea" type="text" rows="2"></textarea>
-    </form>
-    <button id="canvasSave">保存</button>
-    <button onClick="dataClear()">すべて消去</button>
+    <textarea id="js-textarea" type="text" rows="2"></textarea>
+    
+    <!--
+        <button id="canvasSave">保存</button>
+        <button onClick="dataClear()">すべて消去</button>
+    -->
+    <div>
+        <video id="video" width="640" height="480" autoplay></video>
+    </div>
+    <button id="start">Start Camera</button>
+    <button id="stop">Stop Camera</button>
 
     <hr>
 
@@ -35,9 +41,14 @@
         </div>
     </div>
     <div id="js-output"></div>
+    <div>
+        <img id="preview" width="320" height="240" src="">
+    </div>
+    <div id="image-para"></div>
 
 </body>
 <script src="js/diff.min.js"></script>
 <script src="js/Textarea.js"></script>
+<script src="js/Photo.js"></script>
 <script src="js/script.js"></script>
 </html>

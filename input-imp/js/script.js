@@ -12,14 +12,17 @@ const dataClear = () => {
 };
 
 
-const textarea = new Textarea('#js-textarea');
+const textarea = new Photo('#js-textarea');
 console.log(textarea);
 const output = document.querySelector('#js-output');
+const imagePara = document.querySelector('#image-para');
 
 const loop = () => {
   const fragment = document.createDocumentFragment();
+  const fragmentI = document.createDocumentFragment();
 
   output.innerHTML = '';
+  imagePara.innerHTML = '';
 
   textarea.entityIds.forEach((entityId, i) => {
     // 入力された順に文字情報を順に取得する
@@ -35,8 +38,9 @@ const loop = () => {
       diff = timestamp - textarea.entity[prevEntityId].timestamp;
     };
 
+    // diffを適した値にするための計算
     const mathDiff = diff/(10 ** 3);
-    console.log(value, diff, mathDiff);
+    //console.log(entityId, i, value, diff, mathDiff);
 
     // 不透明度に適応させる
     span.style.opacity = `${Math.max(mathDiff, 0.01)}`;
@@ -49,9 +53,22 @@ const loop = () => {
     span.appendChild(document.createTextNode(value));
     fragment.appendChild(span);
     */
+
+    // storageの画像を表示
+    if (textarea.entity[entityId].imageData) {
+      const spanI = document.createElement('span');
+      spanI.style.fontSize = '64px';
+      spanI.style.backgroundImage = `url(${textarea.entity[entityId].imageData.imageUrl})`;
+      spanI.style.backgroundClip = 'text';
+      spanI.style.webkitBackgroundClip = "text";
+      spanI.style.color = 'transparent';
+      spanI.appendChild(document.createTextNode(value));
+      fragmentI.appendChild(spanI);
+    }
   });
 
   output.appendChild(fragment);
+  imagePara.appendChild(fragmentI);
   window.requestAnimationFrame(loop);
   
 };
