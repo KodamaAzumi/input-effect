@@ -54,17 +54,27 @@ const loop = () => {
     fragment.appendChild(span);
     */
 
+    //console.log(textarea.entity[entityId]);
+    //console.log(textarea.entity[prevEntityId]);
+
     // storageの画像を表示
+    const spanI = document.createElement('span');
+    spanI.style.fontSize = '64px';
     if (textarea.entity[entityId].imageData) {
-      const spanI = document.createElement('span');
-      spanI.style.fontSize = '64px';
       spanI.style.backgroundImage = `url(${textarea.entity[entityId].imageData.imageUrl})`;
-      spanI.style.backgroundClip = 'text';
-      spanI.style.webkitBackgroundClip = "text";
-      spanI.style.color = 'transparent';
-      spanI.appendChild(document.createTextNode(value));
-      fragmentI.appendChild(spanI);
+    } 
+    /*
+    if (textarea.entity[prevEntityId] && !textarea.entity[prevEntityId].imageData) {
+      textarea.entity[prevEntityId].imageData = {
+        imageUrl: textarea.entity[entityId].imageData.imageUrl,
+      };
     }
+    */
+    spanI.style.backgroundClip = 'text';
+    spanI.style.webkitBackgroundClip = "text";
+    spanI.style.color = 'transparent';
+    spanI.appendChild(document.createTextNode(value));
+    fragmentI.appendChild(spanI);
   });
 
   output.appendChild(fragment);

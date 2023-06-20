@@ -2,13 +2,13 @@ class Photo extends Textarea {
     constructor(selectors) {
         super(selectors);
 
-        this. video = document.getElementById('video');
-        this. canvas = document.createElement('canvas');
+        this.video = document.getElementById('video');
+        this.canvas = document.createElement('canvas');
         this.canvas.width = 320; // 幅を指定
         this.canvas.height = 240; // 高さを指定
-        this. startButton = document.getElementById('start');
-        this. stopButton = document.getElementById('stop');
-        this. preview = document.getElementById('preview');
+        this.startButton = document.getElementById('start');
+        this.stopButton = document.getElementById('stop');
+        this.preview = document.getElementById('preview');
         this.stream = null;
   
         // スタートボタンをクリックしたときの処理
@@ -68,42 +68,17 @@ class Photo extends Textarea {
             // キャプチャした画像をプレビューする
             this.preview.src = imageUrl;
 
+            // 画像をオブジェクトに追加する
             this.imageData = {
                 imageUrl
-            }
+            };
             const length = this.entityIds.length;
             const entityIdsLast = this.entityIds[length - 1];
+            // entityにimageDataを追加
             if (this.entity[entityIdsLast]) {
                 this.entity[entityIdsLast].imageData = this.imageData;
             }
             
-            console.log(this.entity);
-            console.log(this.entityIds);
-            console.log(length);
-
-            const imagePara =  document.getElementById('image-para');
-            const keyWord = document.getElementsByClassName(`key-word`);
-
-            // storageの画像を表示
-            /*
-            this.entityIds.forEach((entityId) => {
-                if (this.entity[entityId].value) {
-                    //console.log(this.entity[entityId].value);;
-                    //console.log(this.entity[entityId].imageData.imageUrl)
-                    const key = this.entity[entityId].value;
-                    imagePara.innerHTML +=  `
-                        <span class='key-word'>${key}</span>
-                    `;
-                    if (keyWord.length > 0) {
-                        keyWord[length -1].style.fontSize = '64px';
-                        keyWord[length -1].style.backgroundImage = `url(${this.entity[entityId].imageData.imageUrl})`;
-                        keyWord[length -1].style.backgroundClip = 'text';
-                        keyWord[length -1].style.webkitBackgroundClip = "text";
-                        keyWord[length -1].style.color = 'transparent';
-                    }
-                }
-            });
-            */
         }
     }
     
