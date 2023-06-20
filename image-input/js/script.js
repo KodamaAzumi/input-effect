@@ -24,11 +24,11 @@ let stream = null;
 const startCamera = () => {
     navigator.mediaDevices.getUserMedia({ video: true })
         .then((s) => {
-        stream = s;
-        video.srcObject = stream;
+            stream = s;
+            video.srcObject = stream;
         })
         .catch((error) => {
-        console.error('Media device error:', error);
+            console.error('Media device error:', error);
         });
 };
 
@@ -43,14 +43,10 @@ const stopCamera = () => {
 
 
 // スタートボタンをクリックしたときの処理
-startButton.addEventListener('click', () => {
-    startCamera();
-});
+startButton.addEventListener('click', startCamera);
 
 // ストップボタンをクリックしたときの処理
-stopButton.addEventListener('click', () => {
-    stopCamera();
-});
+stopButton.addEventListener('click', stopCamera);
 
 // 写真を取るときの処理
 const capture = async (event) => {
@@ -117,7 +113,7 @@ const capture = async (event) => {
             if (storageObject && length < 140) {
                 const imagePara =  document.getElementById('image-para');
                 imagePara.innerHTML +=  `
-                <span class='key-word'>${key}</span>
+                    <span class='key-word'>${key}</span>
                 `;
                 const keyWord = document.getElementsByClassName(`key-word`);
                 keyWord[length -1].style.fontSize = '64px';
@@ -153,7 +149,7 @@ if (storageObject) {
     for (let i = 0; i < storageObject.length; i++) {
         
         imagePara.innerHTML += `
-        <span class='key-word'>${storageObject[i].key}</span>
+            <span class='key-word'>${storageObject[i].key}</span>
         `;
         document.getElementsByClassName('key-word')[i].style.backgroundImage = `url(${storageObject[i].imageUrl})`;
         //console.log(storageObject[i]);
