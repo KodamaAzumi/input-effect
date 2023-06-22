@@ -25,6 +25,7 @@ class Photo extends Textarea {
         // 写真の情報を保持するオブジェクト
         this.imageData = {};
 
+        this.ee.on('added', this.onAdded);
     }
 
     // カメラを起動する関数
@@ -62,10 +63,10 @@ class Photo extends Textarea {
         if (this.stream) {
 
             // キャンバスにビデオ画像を描画する
-            context.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
+            this.context.drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
 
             // 画像の容量を変更する
-            const imageUrl = this.canvas.toDataURL('image/jpeg', quality);
+            const imageUrl = this.canvas.toDataURL('image/jpeg', this.quality);
         
             // キャプチャした画像をプレビューする
             this.preview.src = imageUrl;
