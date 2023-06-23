@@ -75,6 +75,15 @@ class Textarea {
       } else {
         caretCoord += part.count;
       }
+
+      // 文字列の追加も削除も行われなかった時（つまり変換がされた時）もカウントを進める
+      if (
+        typeof part.added === 'undefined' &&
+        typeof part.removed === 'undefined'
+      ) {
+        this.count++;
+      }
+
     });
 
     // 変更後の文字列を更新する（次の input イベント発生時に文字列の比較に使われる）
