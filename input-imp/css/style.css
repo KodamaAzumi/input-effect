@@ -8,14 +8,6 @@ html {
     display: none;
 }
 
-.container {
-    display: flex;
-}
-
-#anker {
-    margin-left: 20px;
-}
-
 #js-textarea {
     font-size: 16px;
 }
