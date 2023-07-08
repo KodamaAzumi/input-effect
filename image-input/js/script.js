@@ -5,12 +5,6 @@
 const storage = localStorage.getItem('keyImage');
 console.log(JSON.parse(storage) || []);
 
-// storage内のデータを消去する
-const dataClear = () => {
-    localStorage.removeItem('keyImage');
-    location.reload();
-};
-
 const video = document.getElementById('video');
 const canvas = document.createElement('canvas');
 canvas.width = 320; // 幅を指定
@@ -40,7 +34,6 @@ const stopCamera = () => {
         video.srcObject = null;
     }
 };
-
 
 // スタートボタンをクリックしたときの処理
 startButton.addEventListener('click', startCamera);
@@ -155,4 +148,4 @@ if (storageObject) {
         //console.log(storageObject[i]);
     }
 }
-    
+

@@ -1,9 +1,3 @@
-/*
-html {
-    background-color: antiquewhite;
-}
-*/
-
 #video, #preview {
     display: none;
 }
@@ -14,4 +8,5 @@ html {
 
 #js-output {
     font-size: 64px;
+    background-color: antiquewhite;
 }
