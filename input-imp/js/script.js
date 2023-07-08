@@ -60,32 +60,10 @@ const loop = () => {
     // storageの画像を表示
     const spanI = document.createElement('span');
     spanI.style.fontSize = '64px';
-    const wordCounts = textarea.entityIds.filter(str => str.startsWith(`c${textarea.count - 1}i`));
-    const prewordCounts = textarea.entityIds.filter(str => str.startsWith(`c${textarea.count - 2}i`));
-    const wordLast = wordCounts[wordCounts.length - 1];
-    const prewordLast = prewordCounts[prewordCounts.length - 1];
+    
     //console.log(wordCounts, prewordCounts, prewordLast, prewordLast);
     if (textarea.entity[entityId].imageData) {
       spanI.style.backgroundImage = `url(${textarea.entity[entityId].imageData.imageUrl})`;
-    } else if (textarea.entity[wordLast] && textarea.entity[wordLast].imageData) {
-      //console.log(wordLast);
-      wordCounts.forEach((wordCount) => {
-        if (!textarea.entity[wordCount].imageData) {
-          textarea.entity[wordCount].imageData = {};
-          textarea.entity[wordCount].imageData.imageUrl = textarea.entity[wordLast].imageData.imageUrl;
-        }
-      });
-      spanI.style.backgroundImage = `url(${textarea.entity[wordLast].imageData.imageUrl})`;
-    } else {
-      wordCounts.forEach((wordCount) => {
-          if (!textarea.entity[wordCount].imageData) {
-            textarea.entity[wordCount].imageData = {};
-            if (textarea.entity[prewordLast]) {
-              textarea.entity[wordCount].imageData.imageUrl = textarea.entity[prewordLast].imageData.imageUrl;
-              console.log(wordLast, prewordLast);
-            }
-          }
-      });
     }
     spanI.style.backgroundClip = 'text';
     spanI.style.webkitBackgroundClip = "text";
