@@ -58,9 +58,6 @@ const loop = () => {
 
     // storageの画像を表示
     const spanImg = document.createElement('span');
-    spanImg.style.fontSize = '64px';
-    
-    //console.log(wordCounts, prewordCounts, prewordLast, prewordLast);
     if (textarea.entity[entityId].imageData) {
       spanImg.style.backgroundImage = `url(${textarea.entity[entityId].imageData.imageUrl})`;
     }
