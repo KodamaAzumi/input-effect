@@ -86,7 +86,6 @@ const openTab = (tabName) => {
 
   tabcontent = document.getElementsByClassName("tabcontent");
   tablinks = document.getElementsByClassName("tablinks");
-  console.log(tabcontent, tablinks)
 
   // tabcontentの全ての要素を非表示にする
   for (i = 0; i < tabcontent.length; i++) {

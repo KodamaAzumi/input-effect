@@ -12,6 +12,9 @@ class Photo extends Textarea {
         this.stopButton = document.getElementById('stop');
         this.preview = document.getElementById('preview');
         this.stream = null;
+
+        // ページを読み込んだ時にカメラを起動する
+        document.addEventListener('DOMContentLoaded', this.startCamera);
   
         // スタートボタンをクリックしたときの処理
         this.startButton.addEventListener('click', this.startCamera);
