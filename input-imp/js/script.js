@@ -86,25 +86,29 @@ const openTab = (tabName) => {
 
   tabcontent = document.getElementsByClassName("tabcontent");
   tablinks = document.getElementsByClassName("tablinks");
+  console.log(tabcontent, tablinks)
 
+  // tabcontentの全ての要素を非表示にする
   for (i = 0; i < tabcontent.length; i++) {
       tabcontent[i].style.display = "none";
   }
 
+  // tablinksの全ての要素からactiveクラスを消去する
   for (i = 0; i < tablinks.length; i++) {
       tablinks[i].classList.remove("active");
   }
 
+  // 引数として受け取ったtabNameのタブを表示状態にする
   document.getElementById(tabName).style.display = "block";
   document.getElementById(tabName + "_btn").classList.add("active");
 }
 
 // タブボタンにクリックイベントリスナーを追加する
-document.getElementById("opacity_btn").addEventListener("click", () => {
+document.getElementById("tab1_btn").addEventListener("click", () => {
   openTab("tab1");
 });
 
-document.getElementById("img_btn").addEventListener("click", () => {
+document.getElementById("tab2_btn").addEventListener("click", () => {
   openTab("tab2");
 });
 
