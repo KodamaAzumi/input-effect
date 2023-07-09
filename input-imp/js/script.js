@@ -18,7 +18,7 @@ const imagePara = document.querySelector('#image-para');
 
 const loop = () => {
   const fragment = document.createDocumentFragment();
-  const fragmentI = document.createDocumentFragment();
+  const fragmentImg = document.createDocumentFragment();
 
   output.innerHTML = '';
   imagePara.innerHTML = '';
@@ -57,22 +57,22 @@ const loop = () => {
     //console.log(textarea.entity[prevEntityId]);
 
     // storageの画像を表示
-    const spanI = document.createElement('span');
-    spanI.style.fontSize = '64px';
+    const spanImg = document.createElement('span');
+    spanImg.style.fontSize = '64px';
     
     //console.log(wordCounts, prewordCounts, prewordLast, prewordLast);
     if (textarea.entity[entityId].imageData) {
-      spanI.style.backgroundImage = `url(${textarea.entity[entityId].imageData.imageUrl})`;
+      spanImg.style.backgroundImage = `url(${textarea.entity[entityId].imageData.imageUrl})`;
     }
-    spanI.style.backgroundClip = 'text';
-    spanI.style.webkitBackgroundClip = "text";
-    spanI.style.color = 'transparent';
-    spanI.appendChild(document.createTextNode(value));
-    fragmentI.appendChild(spanI);
+    spanImg.style.backgroundClip = 'text';
+    spanImg.style.webkitBackgroundClip = "text";
+    spanImg.style.color = 'transparent';
+    spanImg.appendChild(document.createTextNode(value));
+    fragmentImg.appendChild(spanImg);
   });
 
   output.appendChild(fragment);
-  imagePara.appendChild(fragmentI);
+  imagePara.appendChild(fragmentImg);
   window.requestAnimationFrame(loop);
   
 };

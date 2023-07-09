@@ -22,9 +22,6 @@ class Photo extends Textarea {
         // ストップボタンをクリックしたときの処理
         this.stopButton.addEventListener('click', this.stopCamera);
 
-        // インプットイベントが起きたときの処理
-        this.el.addEventListener('input', this.capture);
-
         // 写真の情報を保持するオブジェクト
         this.imageData = {};
 
